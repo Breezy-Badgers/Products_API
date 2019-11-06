@@ -1,0 +1,25 @@
+{
+  "name": "products_api",
+  "version": "1.0.0",
+  "description": "API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Breezy-Badgers/Products_API.git"
+  },
+  "keywords": [
+    "API"
+  ],
+  "author": "Luke Barr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Breezy-Badgers/Products_API/issues"
+  },
+  "homepage": "https://github.com/Breezy-Badgers/Products_API#readme",
+  "dependencies": {
+    "mongoose": "^5.7.8"
+  }
+}
