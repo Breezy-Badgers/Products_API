@@ -1,31 +1,29 @@
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost')
-.on('error' => console.error.bind(console, error))
-.once('open', console.log('db connected') )
+mongoose.connect('mongodb://localhost/products', { useNewUrlParser: true, useUnifiedTopology: true })
+
+const db = mongoose.connection
+
+db.on('error', console.error.bind(console, "connection error: \n"))
+db.once('open', console.log.bind(console, 'db connected'))
 
 
-let product = mongoose.schema({
+let product = mongoose.Schema({
     id: Number,
     name: String,
     slogan: String,
     description: String,
     category: String,
     default_price: Number,
-    info: [{
-        product_id: Number,
-        feature: String,
-        value: String
-    }]
 })
 
-let photo = mongoose.schema({
+let photo = mongoose.Schema({
     style_id: Number, 
     thumbnail_url: String,
     url: String
 })
 
-let style = mongoose.schema({
+let style = mongoose.Schema({
     product_id: Number,
     style_id: Number,
     name: String,
@@ -48,6 +46,9 @@ let products = mongoose.model('products', product)
 let photos = mongoose.model('photos', photo)
 
 let styles = mongoose.model('styles', style)
+
+
+// const saveProducts = ()
 
 
 
