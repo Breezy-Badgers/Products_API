@@ -10,6 +10,9 @@ var entry = []
 
 fs.createReadStream(`./photo_split/photos.csv`)
 .pipe(csv({mapValues: ({headers,index,value}) => handleValues(value) },['id','styleId','url','thumbnail_url']))
+.on('data', (data) => {
+
+})
 .on('end', () => {
     console.log('success')
 })
@@ -18,20 +21,5 @@ fs.createReadStream(`./photo_split/photos.csv`)
 })
 
 function handleValues(values) {
-    if(entry.length === 4){
-        console.log(entry)
-        db(entry)
-        entry = []
-    }
-    var arrayValues = values.split('\n')
-    if(arrayValues.length > 1){
-        entry.push(arrayValues[0])
-        if(entry.length === 4){
-            console.log(entry)
-            db(entry)
-        }
-        entry = arrayValues[1].split(',')
-    } else {
-        entry.push(arrayValues[0])
-    }
+    
 }
