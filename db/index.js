@@ -18,7 +18,8 @@ const photo = mongoose.Schema({
     styleId: String,
     thumbnail_url: String,
     url: String
-})
+},
+{collection: 'photos'})
 
 const list = mongoose.Schema({
     id: Number,
@@ -35,20 +36,33 @@ const feature = mongoose.Schema({
     product_id:Number,
     feature:String,
     value:String
-})
+},
+{collection: 'features'})
 
 const relatedId = mongoose.Schema({
     id: String,
     current_product_id: String,
     related_product_id: String
-})
+},
+{collection: 'related'})
 
 const skuss = mongoose.Schema({
     id: Number,
     styleId: Number,
     size: String,
     quantity: Number
-})
+},
+{collection: 'skus'})
+
+const style = mongoose.Schema({
+    original_price: String,
+    name: String,
+    default_style: String,
+    sale_price: String,
+    id: String,
+    productId: String
+},
+{collectino: 'styles'})
 
 
 
@@ -57,7 +71,7 @@ const features = mongoose.model('features', feature)
 const products = mongoose.model('list', list)
 const related = mongoose.model('related', relatedId)
 const skus = mongoose.model('skus', skuss)
-
+const styles = mongoose.model('styles', style)
 
 module.exports = {
 
@@ -78,9 +92,36 @@ module.exports = {
 },
 
 
- getProduct : (req) => {
-     console.log(req.params.product_id)
-    return products.find({id: req.params.product_id})
+getProduct : (req) => {
+    return products.find({id: req.params.product_id}).exec()
+},
+
+getFeatures: (req) => {
+    return features.find({product_id: req.params.product_id}).exec()
+},
+
+getList: (req) => {
+    var page = req.query.page || 1
+    var count = req.query.count || 5
+    var startingId = (page * count) - count + 1 || 1
+    var endingId = page * count || 5
+    return products.find({id: {$gte: startingId, $lte: endingId}}).exec()
+},
+
+getStyles: (req) => {
+    return styles.find({productId: req.params.product_id}).exec()
+},
+
+getRelated: (req) => {
+    return related.find({current_product_id: req.params.product_id}).exec()
+},
+
+getPhotos: (id) => {
+    return photos.find({styleId: id}).exec()
+},
+
+getSkus: (id) => {
+    return skus.find({styleId: id}).exec()
 }
 
 }

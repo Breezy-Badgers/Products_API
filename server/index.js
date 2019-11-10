@@ -10,7 +10,7 @@ const port = 3000;
 
 app.use(bodyParser.json());
 
-app.get('/list', (req, res) => {
+app.get('/products/list', (req, res) => {
     handleList(req, res)
 })
 app.get('/products/:product_id',  (req, res) => {
