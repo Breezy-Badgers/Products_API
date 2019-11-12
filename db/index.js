@@ -14,8 +14,8 @@ db.once('open', console.log.bind(console, 'db connected'))
 
 
 const photo = mongoose.Schema({
-    id: String,
-    styleId: String,
+    id: Number,
+    styleId: Number,
     thumbnail_url: String,
     url: String
 },
@@ -40,9 +40,9 @@ const feature = mongoose.Schema({
 {collection: 'features'})
 
 const relatedId = mongoose.Schema({
-    id: String,
-    current_product_id: String,
-    related_product_id: String
+    id: Number,
+    current_product_id: Number,
+    related_product_id: Number
 },
 {collection: 'related'})
 
@@ -55,12 +55,12 @@ const skuss = mongoose.Schema({
 {collection: 'skus'})
 
 const style = mongoose.Schema({
-    original_price: String,
+    original_price: Number,
     name: String,
-    default_style: String,
-    sale_price: String,
-    id: String,
-    productId: String
+    default_style: Number,
+    sale_price: Number,
+    id: Number,
+    productId: Number
 },
 {collectino: 'styles'})
 
@@ -75,54 +75,37 @@ const styles = mongoose.model('styles', style)
 
 module.exports = {
 
-    savePhotos : (csvArray) => {
-    var photosObj = {
-        id: csvArray[0],
-        styleId: csvArray[1],
-        thumbnail_url: csvArray[2],
-        url: csvArray[3]
+    getProduct : (req) => {
+        return products.find({id: req.params.product_id}).exec()
+    },
+
+    getFeatures: (req) => {
+        return features.find({product_id: req.params.product_id}).exec()
+    },
+
+    getList: (req) => {
+        var page = req.query.page || 1
+        var count = req.query.count || 5
+        var startingId = (page * count) - count + 1 || 1
+        var endingId = page * count || 5
+        return products.find({id: {$gte: startingId, $lte: endingId}}).exec()
+    },
+
+    getStyles: (req) => {
+        return styles.find({productId: req.params.product_id}).exec()
+    },
+
+    getRelated: (req) => {
+        return related.find({current_product_id: req.params.product_id}).exec()
+    },
+
+    getPhotos: (id) => {
+        return photos.find({styleId: id}).exec()
+    },
+
+    getSkus: (id) => {
+        return skus.find({styleId: id}).exec()
     }
-    photos.create(photosObj)
-    .then(() => {
-        console.log(photosObj)
-    })
-    .catch((error) => {
-        console.log('error in savePhotos at ', photosObj.id)
-    })
-},
-
-
-getProduct : (req) => {
-    return products.find({id: req.params.product_id}).exec()
-},
-
-getFeatures: (req) => {
-    return features.find({product_id: req.params.product_id}).exec()
-},
-
-getList: (req) => {
-    var page = req.query.page || 1
-    var count = req.query.count || 5
-    var startingId = (page * count) - count + 1 || 1
-    var endingId = page * count || 5
-    return products.find({id: {$gte: startingId, $lte: endingId}}).exec()
-},
-
-getStyles: (req) => {
-    return styles.find({productId: req.params.product_id}).exec()
-},
-
-getRelated: (req) => {
-    return related.find({current_product_id: req.params.product_id}).exec()
-},
-
-getPhotos: (id) => {
-    return photos.find({styleId: id}).exec()
-},
-
-getSkus: (id) => {
-    return skus.find({styleId: id}).exec()
-}
 
 }
 
