@@ -7,7 +7,7 @@ module.exports = {
     handleList: async (req, res) => {
         try {
             let list = await getList(req)
-            res.send(list)
+            res.status(200).send(list)
         } catch(error){
             console.log('error in handleList: ', error)
             res.sendStatus(404)
@@ -20,7 +20,7 @@ module.exports = {
         let features = await getFeatures(req)
         let obj = Object.assign({},product[0]._doc)
         obj.features = features
-        res.send(obj)
+        res.status(201).send(obj)
         } catch (error) {
             console.log('error in handleProduct: ', error)
             res.sendStatus(404)
@@ -63,7 +63,7 @@ module.exports = {
             product_id: styles[0].productId,
             results: results
         }
-        res.send(returned)
+        res.status(203).send(returned)
         }catch(error){
             console.log('error in handleStyles', error)
             res.sendStatus(500)
@@ -77,7 +77,7 @@ module.exports = {
             for(var obj of related){
                 returnObj.push(obj.related_product_id)
             }
-            res.send(returnObj)
+            res.status(204).send(returnObj)
          } catch(error) {
             console.log('error in handleRelated: ', error)
             res.send(500)

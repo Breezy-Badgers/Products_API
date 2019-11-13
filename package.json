@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/Breezy-Badgers/Products_API#readme",
   "dependencies": {
-    "artillery": "^1.6.0-29",
     "body-parser": "^1.19.0",
     "csv-parse": "^4.6.5",
     "csv-parser": "^2.3.1",
