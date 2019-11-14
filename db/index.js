@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
+const config = require('../config.js')
 
 
 
-
-mongoose.connect('mongodb://localhost:27017/products', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(`mongodb:${config.key}`, { useNewUrlParser: true, useUnifiedTopology: true })
 
 
 
