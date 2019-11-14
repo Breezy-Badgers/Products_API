@@ -30,7 +30,7 @@ app.get('/products/:product_id/related',  (req, res) => {
 })
 
 app.get('/loaderio-bb1dbb6bc620d071f6e9547bc8250996', (req, res) => {
-    res.sendFile('../loaderio-bb1dbb6bc620d071f6e9547bc8250996.txt')
+    res.send('loaderio-bb1dbb6bc620d071f6e9547bc8250996')
 })
 
 app.listen(port, () => {
