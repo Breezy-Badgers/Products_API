@@ -29,6 +29,10 @@ app.get('/products/:product_id/related',  (req, res) => {
     handleRelated(req, res)
 })
 
+app.get('/loaderio-bb1dbb6bc620d071f6e9547bc8250996', (req, res) => {
+    res.send('../loaderio-bb1dbb6bc620d071f6e9547bc8250996.txt')
+})
+
 app.listen(port, () => {
     console.log(`server listening on port ${port}`)
 })
