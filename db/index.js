@@ -4,7 +4,9 @@ const config = require('../config.js')
 
 
 mongoose.connect(`mongodb:${config.key}`, { useNewUrlParser: true, useUnifiedTopology: true })
-
+.catch((error) => {
+    console.log(error)
+})
 
 
 const db = mongoose.connection
