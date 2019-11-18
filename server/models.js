@@ -28,36 +28,24 @@ module.exports = {
     },
 
     handleStyles: async (req, res) => {
-      try{ let styles = await getStyles(req)
+      try{
+        let styles = await getStyles(req)
         var results = []
         for(var style of styles){
-            let photos = await getPhotos(style.id)
-            var photosArr = []
-            for(var photo of photos){
-                let obj = {
-                    thumbnail_url: photo.thumbnail_url,
-                    url: photo.url
-                }
-                photosArr.push(obj)
-            }
-            let skus = await getSkus(style.id)
-            let sizes = {}
-            for(var size of skus){
+            var sizes = {}
+            for(var size of style.skus){
                 sizes[size.size] = size.quantity
             }
             let styleObj = {
-                style_id: style.id,
+                style_id: style.style_id,
                 name: style.name,
                 original_price: style.original_price,
                 sale_price: style.sale_price || 0,
-                default: style.default_style,
-                photos: photosArr,
+                default: style.default,
+                photos: style.photos,
                 skus: sizes
             }
-            if(style.sale_price){
-                
-            }
-           results.push(styleObj)
+            results.push(styleObj)
         }
         var returned = {
             product_id: styles[0].productId,

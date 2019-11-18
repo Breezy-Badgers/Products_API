@@ -59,10 +59,12 @@ const skuss = mongoose.Schema({
 const style = mongoose.Schema({
     original_price: Number,
     name: String,
-    default_style: Number,
+    default: Number,
     sale_price: Number,
-    id: Number,
-    productId: Number
+    style_id: Number,
+    productId: Number,
+    photos: [],
+    skus: []
 },
 {collectino: 'styles'})
 
@@ -94,19 +96,19 @@ module.exports = {
     },
 
     getStyles: (req) => {
-        return styles.find({productId: req.params.product_id}).exec()
+        return styles.find({productId: req.params.product_id}).lean().exec()
     },
 
     getRelated: (req) => {
-        return related.find({current_product_id: req.params.product_id}).exec()
+        return related.find({current_product_id: req.params.product_id}).lean().exec()
     },
 
     getPhotos: (id) => {
-        return photos.find({styleId: id}).exec()
+        return photos.find({styleId: id}).lean().exec()
     },
 
     getSkus: (id) => {
-        return skus.find({styleId: id}).exec()
+        return skus.find({styleId: id}).lean().exec()
     }
 
 }
